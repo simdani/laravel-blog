@@ -1,33 +1,34 @@
-@extends ('partials.layout')
+@extends ('partials.layout') @section ('content')
 
+<div class="col-sm-8 blog-main">
 
-@section ('content')
+  <h1>Publish a new post</h1>
 
-  <div class="col-sm-8 blog-main">
+  <hr>
 
-    <h1>Publish a new post</h1>
+  <form method="POST" action="/posts">
 
-    <hr>
+    {{ csrf_field() }}
 
-    <form method="POST" action="/posts">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" name="title">
+    </div>
 
-      {{ csrf_field() }}
+    <div class="form-group">
+      <label for="body">Body</label>
+      <textarea class="form-control" id="body" name="body"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" name="title">
-      </div>
-
-      <div class="form-group">
-        <label for="body">Body</label>
-        <textarea class="form-control" id="body" name="body"></textarea>
-      </div>
-
+    <div class="form-group">
       <button type="submit" class="btn btn-primary">Publish</button>
-    
-    
-    </form>
+    </div>
 
-  </div>
+    @include ('partials/errors')
+
+  </form>
+
+
+</div>
 
 @endsection
