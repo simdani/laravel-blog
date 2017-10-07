@@ -7,16 +7,9 @@
     <title>Document</title>
 </head>
 <body>
+    <h2>Task</h2>
 
-    <h1>Hello</h1>
-
-    <h2>Tasks</h2>
-
-    <ul>
-        @foreach ($tasks as $task)
-            <li>{{ $task->body }}</li>
-        @endforeach
-    </ul>
+    <h3>{{ $task->body }}</h3>
     
 </body>
 </html>
