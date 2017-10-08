@@ -5,11 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Post;
+use Carbon\Carbon;
 
 class PostsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     public function index() {
-        $posts = Post::latest()->get();
+
+        if (request(['month', 'year'])) {
+            $posts = Post::latest()
+                ->filter(request(['month', 'year']))
+                ->get();
+        }
+        else {
+            $posts = Post::latest()->get();
+        }
 
         return view('posts.index', compact('posts'));
     }   
@@ -30,7 +43,14 @@ class PostsController extends Controller
             
         ]);
         // save post to database
-        Post::create(request(['title', 'body']));
+        // Post::create([
+        //     'title' => request('title'),
+        //     'body' => request('body'),
+        //     'user_id' => auth()->id()
+        // ]);
+        auth()->user()->publish(
+            new Post(request(['title', 'body']))
+        );
 
         // redirect to main page
         return redirect('/');
